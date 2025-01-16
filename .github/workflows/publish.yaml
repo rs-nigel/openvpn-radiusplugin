@@ -1,20 +1,23 @@
-name: Publish release
+name: Publish Release
 on:
   push:
+    branches: [ master ]
     tags:
     - v*.*
 jobs:
-  publush-release:
+  publish-release:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: install libgcrypt
+    - uses: actions/checkout@v4
+    - name: Install libgcrypt
       run: sudo apt-get install -y libgcrypt-dev
-    - name: build
+    - name: Build
       run: make
-    - name: release
-      uses: softprops/action-gh-release@v1
+    - name: Release
+      uses: softprops/action-gh-release@v2
       with:
+          make_latest: true
+          tag_name: "v2.3"
           files: |
             radiusplugin.so
             radiusplugin.cnf
